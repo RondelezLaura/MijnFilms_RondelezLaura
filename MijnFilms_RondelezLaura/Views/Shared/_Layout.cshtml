@@ -39,6 +39,11 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
+
+        <p>@RenderSection("zoeken", required: false)</p>
+
+        <p>@RenderSection("gevonden", required: false)</p>
+
         <hr />
         <footer>
             <p>&copy; 2018 - MijnFilms_RondelezLaura</p>

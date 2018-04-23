@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MijnFilms_RondelezLaura.Entities.Movie>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+@section zoeken{
+    <form asp-action="Find">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <input asp-for="Zoekterm" class="form-control" placeholder="Plaats hier je zoekterm" />
+            <span asp-validation-for="Zoekterm" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Zoek" class="btn btn-default" />
+        </div>
+    </form>
+}
+
+<h2>Filmlijst</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><a asp-action="Sort" asp-route-id="titel">Titel</a></th>
+            <th><a asp-action="Sort" asp-route-id="jaar">Jaar</a></th>
+            <th><a asp-action="Sort" asp-route-id="waardering">Waardering</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem =>
+                                       @for (var i = Model.Waardering; i >= 0; i--)
+                                        {
+                                            <span class="glyphicon glyphicon-star" style="color:black"></span>
+                                        }
+                                        @for (var i = 10-Model.Waardering; i >= 0; i--)
+                                        {
+                                            <span class="glyphicon glyphicon-star" style="color:white"></span>
+                                        })
+                </td>
+                <td>
+                    <a asp-action="Description" asp-route-id="@item.MovieID" class="glyphicon glyphicon-film"></a>
+                </td>
+            </tr>
+                                                        }
+    </tbody>
+</table>
+
+@section gevonden{
+    @Model.Count() films gevonden
+}
+
